@@ -1,7 +1,9 @@
+import MainLayout from './layout/MainLayout';
+
 function App() {
   return (
     <div>
-      <button className="btn btn-primary">Hello</button>
+      <MainLayout />
     </div>
   );
 }
