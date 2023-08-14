@@ -1,20 +1,29 @@
+import { useState } from 'react';
 import BookCard from '../components/BookCard';
 import Error from '../components/Error';
-import Header from '../components/Header';
 import Info from '../components/Info';
 import Loader from '../components/Loader';
+import Pagination from '../components/Pagination';
 import { useGetAllBooksQuery } from '../redux/features/book/bookApi';
 import { BookType } from '../types/bookType';
 
-const Home = () => {
+const AllBooks = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const {
     data: books,
     isLoading,
     isError,
   } = useGetAllBooksQuery({
+    page: currentPage,
     limit: 10,
     sortBy: 'createdAt',
   });
+
+  const totalPages = Math.ceil(books?.meta?.total / books?.meta?.limit);
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   let content = null;
 
@@ -32,15 +41,22 @@ const Home = () => {
 
   return (
     <div className="container mx-auto">
-      <Header />
       <div className="my-5">
         <div>
-          <h3 className="text-3xl py-8 text-center">Recently Added Books</h3>
+          <h3 className="text-3xl py-8 text-center">All Books</h3>
         </div>
         <div className="grid grid-cols-5 gap-5">{content}</div>
+
+        <div className="text-center mt-10">
+          <Pagination
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default AllBooks;

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
+import AllBooks from '../pages/AllBooks';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -22,6 +23,10 @@ const routes = createBrowserRouter([
       {
         path: '/register',
         element: <Register />,
+      },
+      {
+        path: '/all-books',
+        element: <AllBooks />,
       },
       {
         path: '/wishlist',

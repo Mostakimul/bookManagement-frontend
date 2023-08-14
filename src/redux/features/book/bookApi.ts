@@ -3,16 +3,11 @@ import { apiSlice } from '../../api/apiSlice';
 const bookApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getAllBooks: build.query({
-      query: () => ({
-        url: '/books',
-      }),
-    }),
-    getRecentBooks: build.query({
-      query: () => ({
-        url: '/books?sortBy=createdAt&limit=10',
+      query: ({ page = 1, limit = 10, sortBy = 'createdAt' }) => ({
+        url: `/books?page=${page}&limit=${limit}&sortBy=${sortBy}`,
       }),
     }),
   }),
 });
 
-export const { useGetAllBooksQuery, useGetRecentBooksQuery } = bookApi;
+export const { useGetAllBooksQuery } = bookApi;

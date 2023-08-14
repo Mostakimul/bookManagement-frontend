@@ -23,6 +23,9 @@ const Navbar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
+          <li>
+            <Link to="/all-books">All Books</Link>
+          </li>
 
           {!isLoggedIn ? (
             <>
