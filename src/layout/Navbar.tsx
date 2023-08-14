@@ -23,9 +23,6 @@ const Navbar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/wishlist">My Wishlist</Link>
-          </li>
 
           {!isLoggedIn ? (
             <>
@@ -37,11 +34,16 @@ const Navbar = () => {
               </li>
             </>
           ) : (
-            <li>
-              <button onClick={logout} className="btn-ghost">
-                Logout
-              </button>
-            </li>
+            <>
+              <li>
+                <Link to="/wishlist">My Wishlist</Link>
+              </li>
+              <li>
+                <button onClick={logout} className="btn-ghost">
+                  Logout
+                </button>
+              </li>
+            </>
           )}
         </ul>
       </div>
