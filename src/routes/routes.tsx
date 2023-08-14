@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Wishlist from '../pages/Wishlist';
+import PrivateRoute from './PrivateRoute';
 
 const routes = createBrowserRouter([
   {
@@ -24,7 +25,11 @@ const routes = createBrowserRouter([
       },
       {
         path: '/wishlist',
-        element: <Wishlist />,
+        element: (
+          <PrivateRoute>
+            <Wishlist />
+          </PrivateRoute>
+        ),
       },
     ],
   },

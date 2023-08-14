@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useAuth from '../hooks/useAuth';
 import { useLoginMutation } from '../redux/features/auth/authApi';
 
 type FormData = {
@@ -15,10 +16,12 @@ const Login = () => {
     { data: responseData, isLoading, error: responseError, isError },
   ] = useLoginMutation();
 
+  const isLoggedIn = useAuth();
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (responseData?.data?.accessToken) {
+    if (responseData?.data?.accessToken || isLoggedIn) {
       navigate('/');
     }
     if (isError && responseError) {
@@ -28,6 +31,7 @@ const Login = () => {
     }
   }, [
     isError,
+    isLoggedIn,
     navigate,
     responseData?.data?.accessToken,
     responseError,

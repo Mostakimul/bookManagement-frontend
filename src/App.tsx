@@ -1,8 +1,13 @@
 import { ToastContainer } from 'react-toastify';
+import useAuthCheck from './hooks/useAuthCheck';
 import MainLayout from './layout/MainLayout';
 
 function App() {
-  return (
+  const authChecked = useAuthCheck();
+
+  return !authChecked ? (
+    <div>Cheking...</div>
+  ) : (
     <div>
       <MainLayout />
       <ToastContainer />
