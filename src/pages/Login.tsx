@@ -13,7 +13,7 @@ type FormData = {
 const Login = () => {
   const [
     login,
-    { data: responseData, isLoading, error: responseError, isError },
+    { data: responseData, isLoading, error: responseError, isError, isSuccess },
   ] = useLoginMutation();
 
   const isLoggedIn = useAuth();
@@ -21,22 +21,24 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (responseData?.data?.accessToken || isLoggedIn) {
+    if (responseData?.data?.email || isLoggedIn) {
       navigate('/');
     }
+
     if (isError && responseError) {
       toast.error(responseError?.data?.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
-  }, [
-    isError,
-    isLoggedIn,
-    navigate,
-    responseData?.data?.accessToken,
-    responseError,
-    responseError?.data?.message,
-  ]);
+  }, [isError, isLoggedIn, navigate, responseData?.data?.email, responseError]);
+
+  useEffect(() => {
+    if (isSuccess && !isError) {
+      toast.success(responseData?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  }, [isError, isSuccess, responseData?.message]);
 
   // hook form
   const {

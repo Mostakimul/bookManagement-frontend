@@ -16,14 +16,39 @@ const authApi = apiSlice.injectEndpoints({
           localStorage.setItem(
             'auth',
             JSON.stringify({
-              accessToken: result.data.data.accessToken,
               email: result.data.data.email,
             }),
           );
 
           dispatch(
             userLoggedIn({
-              accessToken: result.data.data.accessToken,
+              email: result.data.data.email,
+            }),
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    }),
+    signup: builder.mutation({
+      query: (data) => ({
+        url: '/auth/signup',
+        method: 'POST',
+        body: data,
+      }),
+      async onQueryStarted(_, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+
+          localStorage.setItem(
+            'auth',
+            JSON.stringify({
+              email: result.data.data.email,
+            }),
+          );
+
+          dispatch(
+            userLoggedIn({
               email: result.data.data.email,
             }),
           );
@@ -35,4 +60,4 @@ const authApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useSignupMutation } = authApi;

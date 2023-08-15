@@ -11,10 +11,9 @@ const useAuthCheck = () => {
 
     if (localAuth) {
       const auth = JSON.parse(localAuth);
-      if (auth?.accessToken && auth?.email) {
+      if (auth?.email) {
         dispatch(
           userLoggedIn({
-            accessToken: auth.accessToken,
             email: auth.email,
           }),
         );
