@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import BookBg from '../assets/bookBg.jpeg';
 import { BookType } from '../types/bookType';
 
 const BookCard = ({ book }: { book: BookType }) => {
-  const { title, author, genre, publicationDate } = book;
+  const { id, title, author, genre, publicationDate } = book;
 
   return (
     <div className="card max-w-max bg-base-100 shadow-xl image-full">
@@ -15,7 +16,9 @@ const BookCard = ({ book }: { book: BookType }) => {
         <p>{genre}</p>
         <p>{publicationDate}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Details</button>
+          <Link to={`/book-details/${id}`}>
+            <button className="btn btn-primary">Details</button>
+          </Link>
         </div>
       </div>
     </div>
