@@ -17,7 +17,7 @@ const useAuthCheck = () => {
         dispatch(
           userLoggedIn({
             email: auth.email,
-            accessToekn: auth?.accessToken,
+            accessToken: auth?.accessToken,
           }),
         );
       }

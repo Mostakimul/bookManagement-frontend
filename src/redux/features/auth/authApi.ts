@@ -50,16 +50,20 @@ const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
 
-          localStorage.setItem(
+          Cookies.set(
             'auth',
             JSON.stringify({
-              email: result.data.data.email,
+              email: result.data.data.user.email,
+              accessToken: result.data.data.accessToken,
             }),
           );
 
+          console.log(result.data.data.user);
+
           dispatch(
             userLoggedIn({
-              email: result.data.data.email,
+              email: result.data.data.user.email,
+              accessToken: result.data.data.accessToken,
             }),
           );
         } catch (error) {

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 
 export interface AuthState {
   user: {
@@ -23,6 +24,7 @@ export const authSlice = createSlice({
       state.accessToken = action.payload.accessToken;
     },
     userLoggedOut: (state) => {
+      Cookies.remove('auth', { path: '' });
       state.user.email = null;
       state.accessToken = null;
     },

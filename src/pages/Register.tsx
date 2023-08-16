@@ -20,7 +20,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (responseData?.data?.email || isLoggedIn) {
+    if (responseData?.data?.user?.email || isLoggedIn) {
       navigate('/');
     }
     if (isError && responseError) {
@@ -28,7 +28,13 @@ const Register = () => {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
-  }, [isError, isLoggedIn, navigate, responseData?.data?.email, responseError]);
+  }, [
+    isError,
+    isLoggedIn,
+    navigate,
+    responseData?.data?.user?.email,
+    responseError,
+  ]);
 
   useEffect(() => {
     if (isSuccess && !isError) {
