@@ -3,7 +3,7 @@ import { useAppSelector } from '../redux/hooks';
 function useAuth() {
   const auth = useAppSelector((state) => state.auth);
 
-  if (auth?.user?.email) {
+  if (auth?.user?.email && auth?.accessToken) {
     return true;
   }
 

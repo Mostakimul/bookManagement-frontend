@@ -17,6 +17,8 @@ const BookDetails = () => {
     isError: reviewIsError,
   } = useGetBookReviewsQuery(id);
 
+  console.log(book);
+
   let content = null;
   let reviewContent = null;
 

@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { apiSlice } from '../../api/apiSlice';
 import { userLoggedIn } from './authSlice';
 
@@ -13,16 +14,25 @@ const authApi = apiSlice.injectEndpoints({
         try {
           const result = await queryFulfilled;
 
-          localStorage.setItem(
+          // localStorage.setItem(
+          //   'auth',
+          //   JSON.stringify({
+          //     email: result.data.data.email,
+          //   }),
+          // );
+
+          Cookies.set(
             'auth',
             JSON.stringify({
               email: result.data.data.email,
+              accessToken: result.data.data.accessToken,
             }),
           );
 
           dispatch(
             userLoggedIn({
               email: result.data.data.email,
+              accessToken: result.data.data.accessToken,
             }),
           );
         } catch (error) {
