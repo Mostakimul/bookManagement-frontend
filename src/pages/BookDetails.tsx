@@ -1,3 +1,4 @@
+import { useJwt } from 'react-jwt';
 import { useParams } from 'react-router-dom';
 import Error from '../components/Error';
 import Info from '../components/Info';
@@ -6,6 +7,7 @@ import Review from '../components/Review';
 import ReviewForm from '../components/ReviewForm';
 import { useGetSingleBookQuery } from '../redux/features/book/bookApi';
 import { useGetBookReviewsQuery } from '../redux/features/review/reviewApi';
+import { useAppSelector } from '../redux/hooks';
 import { ReviewType } from '../types/reviewType';
 
 const BookDetails = () => {
@@ -17,6 +19,9 @@ const BookDetails = () => {
     isLoading: reviewIsLoading,
     isError: reviewIsError,
   } = useGetBookReviewsQuery(id);
+
+  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  const { decodedToken } = useJwt(accessToken!);
 
   let content = null;
   let reviewContent = null;
@@ -38,7 +43,7 @@ const BookDetails = () => {
               <th>Author</th>
               <th>Genre</th>
               <th>Publication Date</th>
-              <th>Action</th>
+              {book?.data?.userId === decodedToken?.id && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -48,10 +53,12 @@ const BookDetails = () => {
               <td>{book?.data?.author}</td>
               <td>{book?.data?.genre}</td>
               <td>{book?.data?.publicationDate}</td>
-              <td className="flex gap-2 justify-center">
-                <button className="btn btn-sm btn-info">Edit</button>
-                <button className="btn btn-sm btn-error">Delete</button>
-              </td>
+              {book?.data?.userId === decodedToken?.id && (
+                <td className="flex gap-2 justify-center">
+                  <button className="btn btn-sm btn-info">Edit</button>
+                  <button className="btn btn-sm btn-error">Delete</button>
+                </td>
+              )}
             </tr>
           </tbody>
         </table>

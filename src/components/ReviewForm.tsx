@@ -57,21 +57,6 @@ const ReviewForm = () => {
               />
             ))}
           </div>
-
-          {/* <div className="">
-            <label>Star: </label>
-            <input
-              {...register('star', { required: true })}
-              aria-invalid={errors.star ? 'true' : 'false'}
-              type="text"
-              placeholder="Enter your rating"
-              className="input input-bordered input-md w-full max-w-xs"
-            />
-            {errors.star?.type === 'required' && (
-              <p role="alert">Rating is required</p>
-            )}
-          </div> */}
-
           <div className="">
             <label>Feedback: </label>
             <input
