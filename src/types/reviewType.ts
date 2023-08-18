@@ -4,3 +4,7 @@ export type ReviewType = {
   userId: string;
   bookId: string;
 };
+
+export type AccesTokenType = {
+  accessToken: string;
+};

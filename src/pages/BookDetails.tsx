@@ -3,6 +3,7 @@ import Error from '../components/Error';
 import Info from '../components/Info';
 import Loader from '../components/Loader';
 import Review from '../components/Review';
+import ReviewForm from '../components/ReviewForm';
 import { useGetSingleBookQuery } from '../redux/features/book/bookApi';
 import { useGetBookReviewsQuery } from '../redux/features/review/reviewApi';
 import { ReviewType } from '../types/reviewType';
@@ -16,8 +17,6 @@ const BookDetails = () => {
     isLoading: reviewIsLoading,
     isError: reviewIsError,
   } = useGetBookReviewsQuery(id);
-
-  console.log(book);
 
   let content = null;
   let reviewContent = null;
@@ -80,6 +79,8 @@ const BookDetails = () => {
           <h2 className="text-3xl font-bold">Reviews</h2>
           {reviewContent}
         </div>
+
+        <ReviewForm />
       </main>
     </div>
   );

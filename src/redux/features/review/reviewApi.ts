@@ -1,4 +1,4 @@
-import { ReviewType } from '../../../types/reviewType';
+import { AccesTokenType, ReviewType } from '../../../types/reviewType';
 import { apiSlice } from '../../api/apiSlice';
 
 const reviewApi = apiSlice.injectEndpoints({
@@ -7,13 +7,24 @@ const reviewApi = apiSlice.injectEndpoints({
       query: (bookId: string | undefined) => ({
         url: `/reviews/${bookId}`,
       }),
+      providesTags: ['reviews'],
     }),
     addBookReview: builder.mutation({
-      query: (data: ReviewType) => ({
+      query: ({
+        accessToken,
+        comment,
+        star,
+        userId,
+        bookId,
+      }: ReviewType & AccesTokenType) => ({
         url: '/reviews',
         method: 'POST',
-        body: data,
+        body: { comment, star, userId, bookId },
+        headers: {
+          authorization: accessToken,
+        },
       }),
+      invalidatesTags: ['reviews'],
     }),
   }),
 });
