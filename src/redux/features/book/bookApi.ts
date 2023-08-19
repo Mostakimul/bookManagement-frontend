@@ -14,6 +14,7 @@ const bookApi = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `/books/${id}`,
       }),
+      providesTags: (result, error, arg) => [{ type: 'book', id: arg }],
     }),
     addBook: builder.mutation({
       query: ({
@@ -49,6 +50,31 @@ const bookApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['books'],
     }),
+    editBook: builder.mutation({
+      query: ({
+        id,
+        accessToken,
+        title,
+        author,
+        genre,
+        publicationDate,
+        userId,
+      }: {
+        id: string;
+      } & BookType &
+        AccesTokenType) => ({
+        url: `/books/${id}`,
+        method: 'PATCH',
+        body: { title, author, userId, genre, publicationDate },
+        headers: {
+          authorization: accessToken,
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        'books',
+        { type: 'book', id: arg.id },
+      ],
+    }),
   }),
 });
 
@@ -57,4 +83,5 @@ export const {
   useGetSingleBookQuery,
   useAddBookMutation,
   useDeleteBookMutation,
+  useEditBookMutation,
 } = bookApi;

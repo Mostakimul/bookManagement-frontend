@@ -50,6 +50,10 @@ const BookDetails = () => {
     navigate('/all-books');
   };
 
+  const handleEdit = (id: string) => {
+    navigate(`/edit-book/${id}`);
+  };
+
   let content = null;
   let reviewContent = null;
 
@@ -82,7 +86,12 @@ const BookDetails = () => {
               <td>{book?.data?.publicationDate}</td>
               {book?.data?.userId === decodedToken?.id && (
                 <td className="flex gap-2 justify-center">
-                  <button className="btn btn-sm btn-info">Edit</button>
+                  <button
+                    onClick={() => handleEdit(book?.data?.id)}
+                    className="btn btn-sm btn-info"
+                  >
+                    Edit
+                  </button>
                   <button
                     onClick={() => handleDelete(book?.data?.id)}
                     className="btn btn-sm btn-error"
