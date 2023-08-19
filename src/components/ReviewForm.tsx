@@ -56,6 +56,9 @@ const ReviewForm = () => {
                 className="mask mask-star-2 bg-orange-400"
               />
             ))}
+            {errors.star?.type === 'required' && (
+              <p role="alert">Rating is required</p>
+            )}
           </div>
           <div className="">
             <label>Feedback: </label>
