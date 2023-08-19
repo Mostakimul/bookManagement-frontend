@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useJwt } from 'react-jwt';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAddBookReviewMutation } from '../redux/features/review/reviewApi';
 import { useAppSelector } from '../redux/hooks';
 
@@ -13,13 +14,15 @@ const ReviewForm = () => {
   const accessToken = useAppSelector((state) => state.auth.accessToken);
   const { decodedToken } = useJwt(accessToken!);
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const [addBookReview, { data, isLoading }] = useAddBookReviewMutation();
+  const [addBookReview, { isLoading }] = useAddBookReviewMutation();
 
   // hook form
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
   const onSubmit = handleSubmit((data) => {
@@ -34,6 +37,13 @@ const ReviewForm = () => {
         userId: decodedToken?.id,
         accessToken,
       });
+      reset();
+    } else {
+      toast.error('You are not authenticated!', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      reset();
+      navigate('/login');
     }
   });
 
