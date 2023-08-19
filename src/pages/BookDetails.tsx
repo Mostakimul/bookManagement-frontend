@@ -40,14 +40,19 @@ const BookDetails = () => {
   const navigate = useNavigate();
 
   const handleDelete = (id: string) => {
-    deleteBook({ id, accessToken: decodedToken?.id });
+    const shouldDelete = window.confirm(
+      'Are you sure you want to delete this item?',
+    );
 
-    if (!deleteLoading && !deleteError && deleteSuccess) {
-      toast.success(data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+    if (shouldDelete) {
+      deleteBook({ id, accessToken: decodedToken?.id });
+      if (!deleteLoading && !deleteError && deleteSuccess) {
+        toast.success(data?.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+      navigate('/all-books');
     }
-    navigate('/all-books');
   };
 
   const handleEdit = (id: string) => {
