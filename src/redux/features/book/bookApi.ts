@@ -1,3 +1,5 @@
+import { BookType } from '../../../types/bookType';
+import { AccesTokenType } from '../../../types/reviewType';
 import { apiSlice } from '../../api/apiSlice';
 
 const bookApi = apiSlice.injectEndpoints({
@@ -12,7 +14,29 @@ const bookApi = apiSlice.injectEndpoints({
         url: `/books/${id}`,
       }),
     }),
+    addBook: builder.mutation({
+      query: ({
+        accessToken,
+        title,
+        author,
+        genre,
+        publicationDate,
+        userId,
+      }: BookType & AccesTokenType) => ({
+        url: '/books',
+        method: 'POST',
+        body: { title, author, userId, genre, publicationDate },
+        headers: {
+          authorization: accessToken,
+        },
+      }),
+      invalidatesTags: ['books'],
+    }),
   }),
 });
 
-export const { useGetAllBooksQuery, useGetSingleBookQuery } = bookApi;
+export const {
+  useGetAllBooksQuery,
+  useGetSingleBookQuery,
+  useAddBookMutation,
+} = bookApi;

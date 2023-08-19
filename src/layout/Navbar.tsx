@@ -42,6 +42,9 @@ const Navbar = () => {
                 <Link to="/wishlist">My Wishlist</Link>
               </li>
               <li>
+                <Link to="/add-book">Add Book</Link>
+              </li>
+              <li>
                 <button onClick={logout} className="btn-ghost">
                   Logout
                 </button>
