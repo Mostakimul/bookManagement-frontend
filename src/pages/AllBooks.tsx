@@ -5,7 +5,7 @@ import Info from '../components/Info';
 import Loader from '../components/Loader';
 import Pagination from '../components/Pagination';
 import { useGetAllBooksQuery } from '../redux/features/book/bookApi';
-import { BookType } from '../types/bookType';
+import { BookTypeId } from '../types/bookType';
 
 const AllBooks = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,7 +34,7 @@ const AllBooks = () => {
   } else if (!isLoading && !isError && !books?.data?.length) {
     content = <Info message="No books found!" />;
   } else if (!isLoading && !isError && books?.data?.length) {
-    content = books?.data?.map((book: BookType) => (
+    content = books?.data?.map((book: BookTypeId) => (
       <BookCard key={book.title} book={book} />
     ));
   }

@@ -14,7 +14,7 @@ const bookApi = apiSlice.injectEndpoints({
       query: (id) => ({
         url: `/books/${id}`,
       }),
-      providesTags: (result, error, arg) => [{ type: 'book', id: arg }],
+      providesTags: (_, __, arg) => [{ type: 'book', id: arg }],
     }),
     addBook: builder.mutation({
       query: ({
@@ -64,10 +64,7 @@ const bookApi = apiSlice.injectEndpoints({
           authorization: accessToken,
         },
       }),
-      invalidatesTags: (result, error, arg) => [
-        'books',
-        { type: 'book', id: arg.id },
-      ],
+      invalidatesTags: (_, __, arg) => ['books', { type: 'book', id: arg.id }],
     }),
   }),
 });

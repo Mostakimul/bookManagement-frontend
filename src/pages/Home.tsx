@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Info from '../components/Info';
 import Loader from '../components/Loader';
 import { useGetAllBooksQuery } from '../redux/features/book/bookApi';
-import { BookType } from '../types/bookType';
+import { BookTypeId } from '../types/bookType';
 
 const Home = () => {
   const {
@@ -25,7 +25,7 @@ const Home = () => {
   } else if (!isLoading && !isError && !books?.data?.length) {
     content = <Info message="No books found!" />;
   } else if (!isLoading && !isError && books?.data?.length) {
-    content = books?.data?.map((book: BookType) => (
+    content = books?.data?.map((book: BookTypeId) => (
       <BookCard key={book.title} book={book} />
     ));
   }
