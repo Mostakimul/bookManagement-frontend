@@ -38,9 +38,9 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <li>
+              {/* <li>
                 <Link to="/wishlist">My Wishlist</Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/add-book">Add Book</Link>
               </li>
