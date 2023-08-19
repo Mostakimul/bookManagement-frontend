@@ -35,7 +35,9 @@ const BookDetails = () => {
   ] = useDeleteBookMutation();
 
   const accessToken = useAppSelector((state) => state.auth.accessToken);
-  const { decodedToken } = useJwt(accessToken!);
+  const { decodedToken } = useJwt(accessToken!) as {
+    decodedToken: { id: string };
+  };
 
   const navigate = useNavigate();
 

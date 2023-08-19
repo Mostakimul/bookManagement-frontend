@@ -24,7 +24,7 @@ const bookApi = apiSlice.injectEndpoints({
         genre,
         publicationDate,
         userId,
-      }: BookType & AccesTokenType) => ({
+      }: BookType & { accessToken: string }) => ({
         url: '/books',
         method: 'POST',
         body: { title, author, userId, genre, publicationDate },
@@ -35,13 +35,7 @@ const bookApi = apiSlice.injectEndpoints({
       invalidatesTags: ['books'],
     }),
     deleteBook: builder.mutation({
-      query: ({
-        id,
-        accessToken,
-      }: {
-        id: string;
-        accessToken: AccesTokenType;
-      }) => ({
+      query: ({ id, accessToken }: { id: string; accessToken: string }) => ({
         url: `/books/${id}`,
         method: 'DELETE',
         headers: {

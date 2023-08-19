@@ -16,7 +16,9 @@ const AddBook = () => {
   const navigate = useNavigate();
 
   const accessToken = useAppSelector((state) => state.auth.accessToken);
-  const { decodedToken } = useJwt(accessToken!);
+  const { decodedToken } = useJwt(accessToken!) as {
+    decodedToken: { id: string };
+  };
 
   // hook form
   const {
@@ -44,7 +46,8 @@ const AddBook = () => {
         position: toast.POSITION.TOP_RIGHT,
       });
     } else {
-      toast.error(responseError?.message, {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      toast.error((responseError as any).data?.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     }

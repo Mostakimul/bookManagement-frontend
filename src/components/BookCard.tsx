@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import BookBg from '../assets/bookBg.jpeg';
-import { BookType } from '../types/bookType';
+import { BookTypeId } from '../types/bookType';
 
-const BookCard = ({ book }: { book: BookType }) => {
+const BookCard = ({ book }: { book: BookTypeId }) => {
   const { id, title, author, genre, publicationDate } = book;
 
   return (

@@ -12,7 +12,9 @@ type FormData = {
 
 const ReviewForm = () => {
   const accessToken = useAppSelector((state) => state.auth.accessToken);
-  const { decodedToken } = useJwt(accessToken!);
+  const { decodedToken } = useJwt(accessToken!) as {
+    decodedToken: { id: string };
+  };
   const { id } = useParams();
   const navigate = useNavigate();
 

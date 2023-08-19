@@ -26,7 +26,8 @@ const Login = () => {
     }
 
     if (isError && responseError) {
-      toast.error(responseError?.data?.message, {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      toast.error((responseError as any).data?.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
