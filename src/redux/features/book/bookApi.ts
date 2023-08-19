@@ -8,6 +8,7 @@ const bookApi = apiSlice.injectEndpoints({
       query: ({ page = 1, limit = 10, sortBy = 'createdAt' }) => ({
         url: `/books?page=${page}&limit=${limit}&sortBy=${sortBy}`,
       }),
+      providesTags: ['books'],
     }),
     getSingleBook: builder.query({
       query: (id) => ({
@@ -32,6 +33,22 @@ const bookApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['books'],
     }),
+    deleteBook: builder.mutation({
+      query: ({
+        id,
+        accessToken,
+      }: {
+        id: string;
+        accessToken: AccesTokenType;
+      }) => ({
+        url: `/books/${id}`,
+        method: 'DELETE',
+        headers: {
+          authorization: accessToken,
+        },
+      }),
+      invalidatesTags: ['books'],
+    }),
   }),
 });
 
@@ -39,4 +56,5 @@ export const {
   useGetAllBooksQuery,
   useGetSingleBookQuery,
   useAddBookMutation,
+  useDeleteBookMutation,
 } = bookApi;

@@ -39,16 +39,18 @@ const AddBook = () => {
       });
     }
 
-    if (!isLoading && !isError && isSuccess) {
+    if (!isLoading && !isError) {
       toast.success(responseData?.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      reset();
-      navigate('/all-books');
     } else {
       toast.error(responseError?.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+    }
+    reset();
+    if (isSuccess) {
+      navigate('/all-books');
     }
   });
 

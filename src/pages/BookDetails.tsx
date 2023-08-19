@@ -1,11 +1,15 @@
 import { useJwt } from 'react-jwt';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Error from '../components/Error';
 import Info from '../components/Info';
 import Loader from '../components/Loader';
 import Review from '../components/Review';
 import ReviewForm from '../components/ReviewForm';
-import { useGetSingleBookQuery } from '../redux/features/book/bookApi';
+import {
+  useDeleteBookMutation,
+  useGetSingleBookQuery,
+} from '../redux/features/book/bookApi';
 import { useGetBookReviewsQuery } from '../redux/features/review/reviewApi';
 import { useAppSelector } from '../redux/hooks';
 import { ReviewType } from '../types/reviewType';
@@ -20,8 +24,31 @@ const BookDetails = () => {
     isError: reviewIsError,
   } = useGetBookReviewsQuery(id);
 
+  const [
+    deleteBook,
+    {
+      isError: deleteError,
+      isLoading: deleteLoading,
+      isSuccess: deleteSuccess,
+      data,
+    },
+  ] = useDeleteBookMutation();
+
   const accessToken = useAppSelector((state) => state.auth.accessToken);
   const { decodedToken } = useJwt(accessToken!);
+
+  const navigate = useNavigate();
+
+  const handleDelete = (id: string) => {
+    deleteBook({ id, accessToken: decodedToken?.id });
+
+    if (!deleteLoading && !deleteError && deleteSuccess) {
+      toast.success(data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    navigate('/all-books');
+  };
 
   let content = null;
   let reviewContent = null;
@@ -56,7 +83,12 @@ const BookDetails = () => {
               {book?.data?.userId === decodedToken?.id && (
                 <td className="flex gap-2 justify-center">
                   <button className="btn btn-sm btn-info">Edit</button>
-                  <button className="btn btn-sm btn-error">Delete</button>
+                  <button
+                    onClick={() => handleDelete(book?.data?.id)}
+                    className="btn btn-sm btn-error"
+                  >
+                    Delete
+                  </button>
                 </td>
               )}
             </tr>
